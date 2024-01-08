@@ -12,7 +12,6 @@ delete "/user/:id", to:"users#destroy"
 
 # routes for blogs
 get "/blog", to:"blogs#index"
-get "/blog/new", to:"blogs#new"
 get "/blog/:id", to:"blogs#show"
 post "/blog", to:"blogs#create"
 patch "/blog/:id", to:"blogs#update"
