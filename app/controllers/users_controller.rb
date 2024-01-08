@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     def show
         user = User.find_by(id: params[:id])
         if user
-            render json: uder
+            render json: user
         else
             render json: {error: "user not found"}, status: :not_found
         end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
 
     def update
-        user = user.find_by(id: params[:id])
+        user = User.find_by(id: params[:id])
 
         if user
             user.update(username: params[:username], email: params[:email], profile_image: params[:profile_image], phone_number: params[:phone_number], password: params[:password])
@@ -41,6 +41,5 @@ class UsersController < ApplicationController
         else
             render json: {error: "user you are trying to delete does not exist"}, status: :not_found
         end        
-    end
     end
 end
