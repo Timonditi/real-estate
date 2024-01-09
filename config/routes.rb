@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :properties
 
 # routes for user
 post "/login", to:"session#login"
