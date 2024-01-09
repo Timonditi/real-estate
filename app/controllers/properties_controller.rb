@@ -14,13 +14,14 @@ class PropertiesController < ApplicationController
     end
 
     def create
-        property = Property.create(title: params[:title], image: params[:image], description: params[:description], price: params[:price], bedrooms: params[:bedrooms], location: params[:location])
+        property = Property.new(title: params[:title], image: params[:image], description: params[:description], price: params[:price], bedrooms: params[:bedrooms], location: params[:location])
         if property.save
-            render json: {success: "property created successful"}, status: :created
+          render json: { success: "Property created successfully" }, status: :ok
         else
-            render json: {error: "property not created"}, status: :unprocessable_entity
+          render json: { error: "Property not created"}, status: :unprocessable_entity
         end
-    end
+      end
+      
 
     def approve
         current_user = User.find_by(id: session[:user_id])
