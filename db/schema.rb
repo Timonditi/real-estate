@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_08_220553) do
+ActiveRecord::Schema[7.1].define(version: 2024_01_09_224352) do
   create_table "blogs", force: :cascade do |t|
     t.string "title"
     t.string "image"
@@ -19,6 +19,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_08_220553) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_blogs_on_user_id"
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.string "title"
+    t.string "image"
+    t.text "description"
+    t.decimal "price"
+    t.string "bedrooms"
+    t.string "location"
+    t.boolean "is_approved", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

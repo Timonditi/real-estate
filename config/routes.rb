@@ -17,4 +17,13 @@ get "/blog/:id", to:"blogs#show"
 post "/blog", to:"blogs#create"
 patch "/blog/:id", to:"blogs#update"
 delete "/blog/:id", to:"blogs#destroy"
+
+# routes for properties
+get "/property", to:"properties#index"
+get "/property/:id", to:"properties#show"
+post "/property", to:"properties#create"
+patch "/property/:id", to:"properties#update"
+delete "/property/:id", to:"properties#destroy"
+get "/approvedproperties", to:"properties#approvedproperties"
+patch "/properties/approve/:id", to:"properties#approve"
 end

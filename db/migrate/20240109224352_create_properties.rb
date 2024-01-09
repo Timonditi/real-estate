@@ -7,7 +7,7 @@ class CreateProperties < ActiveRecord::Migration[7.1]
       t.decimal :price
       t.string :bedrooms
       t.string :location
-      t.boolean :is_approved
+      t.boolean :is_approved, default: false
 
       t.timestamps
     end

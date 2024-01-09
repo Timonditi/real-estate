@@ -4,7 +4,7 @@ class Property < ApplicationRecord
     validates :title, presence: true, uniqueness: true
     validates :image, presence: true
     validates :description, presence: true
-    validates :amount, presence: true
+    validates :price, presence: true, numericality: { greater_than: 0 }
     validates :bedrooms, presence: true
     validates :location, presence: true
 end
