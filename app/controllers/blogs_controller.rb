@@ -28,6 +28,8 @@ class BlogsController < ApplicationController
     end
   
     def update
+      current_user = User.find_by(id: session[:user_id])
+      if current_user&.is_admin?
       blog = Blog.find_by(id: params[:id])
       if blog
         if blog.update(title: params[:title], image: params[:image], content: params[:content], user_id: params[:user_id])
@@ -38,9 +40,14 @@ class BlogsController < ApplicationController
       else
         render json: { error: "blog not found" }, status: :not_found
       end
+      else
+        render json: { error: "admins can only perform such operation" }
+      end 
     end
   
     def destroy
+      current_user = User.find_by(id: session[:user_id])
+      if current_user&.is_admin?
       blog = Blog.find_by(id: params[:id])
       if blog
         blog.destroy
@@ -48,6 +55,9 @@ class BlogsController < ApplicationController
       else
         render json: { error: "blog you are trying to delete does not exist" }, status: :not_found
       end
+      else
+        render json: { error: "admins can only perform such operation" }
+      end   
     end
   end
   
