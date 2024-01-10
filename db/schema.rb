@@ -29,8 +29,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_224352) do
     t.string "bedrooms"
     t.string "location"
     t.boolean "is_approved", default: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,4 +47,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_09_224352) do
   end
 
   add_foreign_key "blogs", "users"
+  add_foreign_key "properties", "users"
 end

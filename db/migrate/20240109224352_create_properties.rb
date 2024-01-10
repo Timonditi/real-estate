@@ -8,6 +8,8 @@ class CreateProperties < ActiveRecord::Migration[7.1]
       t.string :bedrooms
       t.string :location
       t.boolean :is_approved, default: false
+      t.references :user, foreign_key: true
+
 
       t.timestamps
     end
