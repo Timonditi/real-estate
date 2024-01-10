@@ -1,10 +1,10 @@
 class Property < ApplicationRecord
-    belongs_to :user
+    has_many :users
 
     validates :title, presence: true, uniqueness: true
     validates :image, presence: true
     validates :description, presence: true
-    validates :price, presence: true, numericality: { greater_than: 0 }
+    validates :price, presence: true
     validates :bedrooms, presence: true
     validates :location, presence: true
 end

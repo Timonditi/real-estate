@@ -14,13 +14,33 @@ class PropertiesController < ApplicationController
     end
 
     def create
-        property = Property.new(title: params[:title], image: params[:image], description: params[:description], price: params[:price], bedrooms: params[:bedrooms], location: params[:location])
-        if property.save
+        property = Property.create(title: params[:title], image: params[:image], description: params[:description], price: params[:price], bedrooms: params[:bedrooms], location: params[:location])
+        if property.valid?
           render json: { success: "Property created successfully" }, status: :ok
         else
           render json: { error: "Property not created"}, status: :unprocessable_entity
         end
+    end
+
+    def update
+      property = Property.find_by(id: params[:id])
+      if property
+        property.update(title: params[:title], image: params[:image], description: params[:description], price: params[:price], bedrooms: params[:bedrooms], location: params[:location])
+        render json: property
+      else
+        render json: {error: "Property not found"}, status: :not_found
       end
+    end
+
+    def destroy
+      property = Property.find_by(id: params[:id])
+      if property
+        property.destroy
+        render json: { success: "property deleted successfully" }, status: :ok
+      else
+        render json: { error: "property you are trying to delete does not exist" }, status: :not_found
+      end
+    end
       
 
     def approve
