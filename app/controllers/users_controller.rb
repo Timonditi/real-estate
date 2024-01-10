@@ -42,4 +42,28 @@ class UsersController < ApplicationController
             render json: {error: "user you are trying to delete does not exist"}, status: :not_found
         end        
     end
+
+    # def approve
+    #       user = User.find_by(id: params[:id])
+    #       if user
+    #           user.update(is_admin: true)
+    #           render json: {success: "user now admin"}, status: :created
+    #       else
+    #           render json: {error: "user not found"}, status: :not_found
+    #       end
+    #   end
+    def approve
+        user = User.find_by(id: params[:id])
+      
+        if user
+          puts "User found: #{user.inspect}"
+          user.update(is_admin: true)
+          puts "User updated: #{user.inspect}"
+          render json: { success: "User now admin" }, status: :created
+        else
+          puts "User not found"
+          render json: { error: "User not found" }, status: :not_found
+        end
+      end
+      
 end
