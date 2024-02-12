@@ -6,6 +6,15 @@ class UsersController < ApplicationController
         render json: users
     end
 
+    def loggedin_user
+        user = User.find_by(id: session[:user_id])
+        if user
+            render json: user
+        else
+            render json:{error: "user not logged in"}, status: :not_found
+        end      
+    end
+
     def show
         user = User.find_by(id: params[:id])
         if user
