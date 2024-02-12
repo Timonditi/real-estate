@@ -10,7 +10,6 @@ get "/user/:id", to:"users#show"
 post "/user", to:"users#create"
 patch "/user/:id", to:"users#update"
 delete "/user/:id", to:"users#destroy"
-patch "/user/approve/:id", to:"users#approve"
 
 
 # routes for blogs
