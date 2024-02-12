@@ -18,7 +18,7 @@ class BlogsController < ApplicationController
     def create
       current_user = User.find_by(id: session[:user_id])
       if current_user&.is_admin?
-        blog = current_user.Blogs.create(title: params[:title], image: params[:image], content: params[:content])
+        blog = current_user.Blog.create(title: params[:title], image: params[:image], content: params[:content])
         if blog.valid?
           render json: { success: "blog created successfully" }, status: :ok
         else
