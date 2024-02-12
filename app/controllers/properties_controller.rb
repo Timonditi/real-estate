@@ -1,4 +1,6 @@
 class PropertiesController < ApplicationController
+  skip_before_action :authorize, only: [:index]
+
     def index
         property = Property.all
         render json: property

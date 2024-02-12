@@ -1,4 +1,6 @@
 class BlogsController < ApplicationController
+  skip_before_action :authorize, only: [:index]
+
     def index
       blogs = Blog.all
       render json: blogs.as_json(include: :user)
