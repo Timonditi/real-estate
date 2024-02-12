@@ -29,38 +29,46 @@ class BlogsController < ApplicationController
       end    
     end
     
-  
-    def update
-      current_user = User.find_by(id: session[:user_id])
-      if current_user&.is_admin?
-      blog = Blog.find_by(id: params[:id])
-      if blog
-        if blog.update(title: params[:title], image: params[:image], content: params[:content], user_id: params[:user_id])
-          render json: { success: "blog updated successfully" }, status: :ok
+    def destroy
+      @current_user = User.find_by(id: session[:user_id])
+      if @current_user&.is_admin?
+        blog = @current_user.blogs.find_by(id: params[:id])
+        if blog
+          blog.destroy
+          render json: { success: "Blog deleted successfully" }, status: :ok
         else
-          render json: { error: blog.errors.full_messages }, status: :unprocessable_entity
+          render json: { error: "Blog not found" }, status: :not_found
         end
       else
-        render json: { error: "blog not found" }, status: :not_found
+        render json: { error: "Only admins can perform such operation" }, status: :unprocessable_entity
       end
-      else
-        render json: { error: "admins can only perform such operation" }
-      end 
     end
+    
   
-    def destroy
-      current_user = User.find_by(id: session[:user_id])
-      if current_user&.is_admin?
-      blog = Blog.find_by(id: params[:id])
-      if blog
-        blog.destroy
-        render json: { success: "blog deleted successfully" }, status: :ok
+    def update
+      @current_user = User.find_by(id: session[:user_id])
+      if @current_user&.is_admin?
+        blog = Blog.find_by(id: params[:id])
+        if blog
+          if blog.update(blog_params)
+            render json: { success: "Blog updated successfully" }, status: :ok
+          else
+            render json: { error: blog.errors.full_messages }, status: :unprocessable_entity
+          end
+        else
+          render json: { error: "Blog not found" }, status: :not_found
+        end
       else
-        render json: { error: "blog you are trying to delete does not exist" }, status: :not_found
+        render json: { error: "Only admins can perform such operation" }, status: :unprocessable_entity
       end
-      else
-        render json: { error: "admins can only perform such operation" }
-      end   
     end
+
+    private
+    
+    def blog_params
+      params.permit(:title, :image, :content).merge(user_id: @current_user.id)
+    end
+    
+
   end
   
