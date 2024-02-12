@@ -16,18 +16,19 @@ class BlogsController < ApplicationController
     end
   
     def create
-      current_user = User.find_by(id: session[:user_id])
-      if current_user&.is_admin?
-        blog = current_user.Blog.create(title: params[:title], image: params[:image], content: params[:content])
+      @current_user = User.find_by(id: session[:user_id])
+      if @current_user&.is_admin?
+        blog = @current_user.blogs.create(title: params[:title], image: params[:image], content: params[:content])
         if blog.valid?
-          render json: { success: "blog created successfully" }, status: :ok
+          render json: { success: "Blog created successfully" }, status: :ok
         else
           render json: { error: blog.errors.full_messages }, status: :unprocessable_entity
         end
       else
-        render json: { error: "admins can only perform such operation" }
+        render json: { error: "Only admins can perform such operation" }, status: :unprocessable_entity
       end    
     end
+    
   
     def update
       current_user = User.find_by(id: session[:user_id])
